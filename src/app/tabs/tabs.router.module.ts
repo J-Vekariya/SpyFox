@@ -9,42 +9,51 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'face',
         children: [
           {
             path: '',
-            loadChildren: '../tab1/tab1.module#Tab1PageModule'
+            loadChildren: '../face/face.module#FacePageModule'
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'web',
         children: [
           {
             path: '',
-            loadChildren: '../tab2/tab2.module#Tab2PageModule'
+            loadChildren: '../web/web.module#WebPageModule'
           }
         ]
       },
       {
-        path: 'tab3',
+        path: 'label',
         children: [
           {
             path: '',
-            loadChildren: '../tab3/tab3.module#Tab3PageModule'
+            loadChildren: '../label/label.module#LabelPageModule'
+          }
+        ]
+      },
+      {
+        path: 'text',
+        children: [
+          {
+            path: '',
+            loadChildren: '../text/text.module#TextPageModule'
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/face',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/face',
     pathMatch: 'full'
   }
 ];

@@ -1,0 +1,79 @@
+<ion-content>
+  <!-- <button (click)="toggle()">Toggle ({{isOpen}})</button>
+  <div [@openClose]="isOpen ? 'open' : 'closed'" class="open-close-container">
+    <p>The box is now {{ isOpen ? 'Open' : 'Closed' }}!</p>
+  </div>
+  <ion-button color="danger" (click)="dismissModal()">Close</ion-button>
+
+  <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide>
+        <h1>Slide 1</h1>
+      </ion-slide>
+      <ion-slide>
+        <h1>Slide 2</h1>
+      </ion-slide>
+      <ion-slide>
+        <h1>Slide 3</h1>
+      </ion-slide>
+    </ion-slides> -->
+
+  <ion-grid>
+    <ion-row class="close-row" >
+      <ion-col >
+          <ion-icon class="close" name="close" (click)="dismissModal()" float-right ></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row padding>
+      <ion-col>
+        <ion-img src="assets/logo.png" justify-content-center></ion-img>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row *ngIf="isOpen">
+      <ion-col>
+        <ion-button color="medium" expand="block" size="medium" (click)="toggleCreate()">Create Account</ion-button>
+        <ion-item text-center lines="none">
+          <ion-label>or</ion-label>
+        </ion-item>
+
+        <ion-button color="primary" expand="block" size="medium" (click)="toggleLogin()">Login</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row padding [@slideInUpWithDelay]="!isOpen ? 'in' : 'out'" *ngIf="!isOpen">
+      <ion-col>
+        <ion-slides pager="true" [options]="slideOpts" class="form-slides"  id="slides">
+          <ion-slide>
+              <form [formGroup]="loginForm">
+            <ion-list>
+              <ion-item>
+                <ion-input placeholder="Mobile Number" formControlName="mobile"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input placeholder="Password" formControlName="password"></ion-input>
+              </ion-item><br>
+              <ion-button color="primary" expand="block" (click)="doLogin()">Login</ion-button>
+            </ion-list>
+            </form>
+          </ion-slide>
+          <ion-slide>
+            <form [formGroup]="signupForm">
+            <ion-list>
+              <ion-item>
+                <ion-input placeholder="Mobile Number" type="number" formControlName="mobile"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input placeholder="Full Name" type="text" formControlName="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input placeholder="Password" type="password" formControlName="password"></ion-input>
+              </ion-item><br>
+              <ion-button color="success" expand="block" (click)="doSignup()">Signup</ion-button>
+            </ion-list>
+            </form>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
