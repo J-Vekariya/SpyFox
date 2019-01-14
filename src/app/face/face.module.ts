@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FacePage } from './face.page';
 
+
 @NgModule({
   imports: [
     IonicModule,
@@ -12,6 +13,7 @@ import { FacePage } from './face.page';
     FormsModule,
     RouterModule.forChild([{ path: '', component: FacePage }])
   ],
-  declarations: [FacePage]
+  declarations: [FacePage],
+  providers: []
 })
 export class FacePageModule {}
