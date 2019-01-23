@@ -3,8 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-};
+  production: false,
+  firebase: {
+  apiKey: 'AIzaSyCyeP-z4p1uDA25JbGDyUUwUkABZ4jYfh0',
+  authDomain: 'spyfox-29bf3.firebaseapp.com',
+  databaseURL: 'https://spyfox-29bf3.firebaseio.com',
+  projectId: 'spyfox-29bf3',
+  storageBucket: 'spyfox-29bf3.appspot.com',
+  messagingSenderId: '851791342195'
+  },
+  googleCloudVisionAPIKey: 'AIzaSyCAnoY5Jqqj85bXTrdGshQecHJUYg-mdOs'
+  };
 
 /*
  * For easier debugging in development mode, you can import the following file

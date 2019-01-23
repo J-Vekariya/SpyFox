@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { HTTP } from '@ionic-native/http';
 import { Camera } from '@ionic-native/camera/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +17,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule, StorageBucket } from '@angular/fire/storage';
 import { CameraService } from './services/camera.service';
 import { VisionService } from './services/vision.service';
+import { HTTP } from '@ionic-native/http/ngx';
 @NgModule({
   declarations: [AppComponent, LoginPage],
   entryComponents: [LoginPage],

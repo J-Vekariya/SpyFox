@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { VisionService } from './vision.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class CameraService {
     mediaType: this.camera.MediaType.PICTURE
   };
 
-  constructor(private camera: Camera, private storage: AngularFireStorage, private visionService: VisionService, private http: HttpClient) {
+  constructor(private camera: Camera, private storage: AngularFireStorage, private visionService: VisionService) {
   }
 
   getPicture() {
@@ -42,42 +41,42 @@ export class CameraService {
     });
   }
 
-  createHTTP(base64Image) {
-    const body = {
-      'requests': [
-        {
-          'image': {
-            'content': base64Image
-          },
-          'features': [
-            {
-              'type': 'LABEL_DETECTION'
-            },
-            {
-              'type': 'WEB_DETECTION'
-            },
-            {
-              'type': 'FACE_DETECTION'
-            }
-          ]
-        }
-      ]
-    };
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    };
-    console.log(body);
+  // createHTTP(base64Image) {
+  //   const body = {
+  //     'requests': [
+  //       {
+  //         'image': {
+  //           'content': base64Image
+  //         },
+  //         'features': [
+  //           {
+  //             'type': 'LABEL_DETECTION'
+  //           },
+  //           {
+  //             'type': 'WEB_DETECTION'
+  //           },
+  //           {
+  //             'type': 'FACE_DETECTION'
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   };
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //     })
+  //   };
+  //   console.log(body);
     
-    this.http.post('https://vision.googleapis.com/v1/images:annotate?key=' + environment.googleCloudVisionAPIKey, body, httpOptions)
-      .subscribe((data) => {
-        console.log(data);
-      }, (err) => {
-        console.log(err);
+  //   this.http.post('https://vision.googleapis.com/v1/images:annotate?key=' + environment.googleCloudVisionAPIKey, body, httpOptions)
+  //     .subscribe((data) => {
+  //       console.log(data);
+  //     }, (err) => {
+  //       console.log(err);
 
-      });
-  }
+  //     });
+  // }
   uploadFile(fileBlob) {
     let filePath: string;
     filePath = new Date().toUTCString();

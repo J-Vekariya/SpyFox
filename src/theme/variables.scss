@@ -2,6 +2,12 @@
 // http://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../assets/fonts/Nunito/Nunito-Light.ttf') format("ttf");
+}
+
 :root {
   /** primary **/
   --ion-color-primary: #3880ff;
@@ -74,4 +80,6 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  --ion-font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
 }
