@@ -18,6 +18,7 @@ import { AngularFireStorageModule, StorageBucket } from '@angular/fire/storage';
 import { CameraService } from './services/camera.service';
 import { VisionService } from './services/vision.service';
 import { HTTP } from '@ionic-native/http/ngx';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent, LoginPage],
   entryComponents: [LoginPage],
@@ -26,7 +27,8 @@ import { HTTP } from '@ionic-native/http/ngx';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    HttpClientModule
   ],
   providers: [
     StatusBar,
