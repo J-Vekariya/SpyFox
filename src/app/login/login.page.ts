@@ -24,6 +24,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
   ],
 })
 export class LoginPage implements OnInit {
+  auth = 'login';
   isOpen = true;
   slideOpts = {
     effect: 'flip',
@@ -41,6 +42,10 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.createForms();
+  }
+  segmentChanged(event) {
+    console.log(event);
+    this.auth = event.detail.value;
   }
 
   createForms() {

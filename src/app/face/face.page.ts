@@ -7,6 +7,9 @@ import { CameraService } from '../services/camera.service';
   styleUrls: ['face.page.scss']
 })
 export class FacePage {
+  image: any = {
+    'src': 'https://www.sanger.ac.uk/sites/default/files/gaffney-group.jpg'
+  };
   constructor(private cameraService: CameraService) {
   }
   captureImage() {

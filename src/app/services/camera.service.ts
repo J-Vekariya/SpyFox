@@ -28,7 +28,7 @@ export class CameraService {
 
       // this.createHTTP(imageData);
       this.visionService.getData(base64Image).subscribe((result: any) => {
-        console.log(result.responses);
+        console.log(JSON.stringify(result.responses));
       }, err => {
         console.log(err);
 
