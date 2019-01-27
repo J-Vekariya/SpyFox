@@ -1,82 +1,83 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { VisionService } from './vision.service';
 import { environment } from 'src/environments/environment';
+import { Observable, from } from 'rxjs';
+import { LoadingService } from './loading.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CameraService {
+  @ViewChild('myCanvas') canvas: any;
   options: CameraOptions = {
     quality: 100,
+    targetWidth: 350,
+    targetHeight: 635,
     destinationType: this.camera.DestinationType.DATA_URL,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   };
-
-  constructor(private camera: Camera, private storage: AngularFireStorage, private visionService: VisionService) {
+  base64Image: Observable<any> = new Observable();
+  image: any;
+  visionResponse: Observable<any> = new Observable();
+  visionData: any;
+  constructor(private camera: Camera, private storage: AngularFireStorage,
+    private visionService: VisionService, public loadingService: LoadingService) {
   }
 
-  getPicture() {
-    this.camera.getPicture(this.options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      const base64Image = imageData;
-      if (localStorage.getItem('currentUser')) {
-        this.uploadFile(this.getBlob(imageData, 'image/png', 512));
-      }
-
-      // this.createHTTP(imageData);
-      this.visionService.getData(base64Image).subscribe((result: any) => {
-        console.log(JSON.stringify(result.responses));
-      }, err => {
-        console.log(err);
-
-        // this.showAlert(err);
+  getPicture(options) {
+    this.base64Image = from(this.camera.getPicture(this.options));
+    this.base64Image.subscribe((data) => {
+      this.loadingService.presentLoading();
+      console.log('Captured');
+      this.getDataFromVision(data);
+      // Image tag src will set here for other tabs
+      localStorage.setItem('imageData', data);
+      this.visionResponse.subscribe((visionData) => {
+        this.visionData = visionData.responses[0];
+        if (options.canvasElement) {
+          const image = new Image();
+          image.setAttribute('src', 'data:image/jpeg;base64,' + data);
+          setTimeout(() => {
+            const ctx = options.canvasElement.getContext('2d');
+            ctx.drawImage(image, 0, 0, 350, 635, 0, 0, 350, 635);
+            if (visionData.responses[0].faceAnnotations) {
+              this.drawRectOnCanvas(ctx, visionData.responses[0]);
+            } else {
+              this.loadingService.dismissLoading();
+              
+            }
+          }, 0);
+        }
       });
-    }, (err) => {
-      console.log(err);
 
-      // Handle error
+      if (localStorage.getItem('currentUser')) {
+        this.uploadFile(this.getBlob(data, 'image/png', 512));
+      }
     });
   }
+  drawRectOnCanvas(ctx, visionResponse) {
+    ctx.strokeRect(
+      visionResponse.faceAnnotations[0].boundingPoly.vertices[0].x,
+      visionResponse.faceAnnotations[0].boundingPoly.vertices[1].y,
+      visionResponse.faceAnnotations[0].boundingPoly.vertices[1].x -
+      visionResponse.faceAnnotations[0].boundingPoly.vertices[0].x,
+      visionResponse.faceAnnotations[0].boundingPoly.vertices[2].y -
+      visionResponse.faceAnnotations[0].boundingPoly.vertices[1].y);
+    this.loadingService.dismissLoading();
+  }
+  getDataFromVision(imageData) {
+    this.visionResponse = from(this.visionService.getData(imageData));
+    // this.visionResponse.subscribe((result: any) => {
+    //   console.log(JSON.stringify(result.responses));
+    // }, err => {
+    //   console.log(err);
+    // });
 
-  // createHTTP(base64Image) {
-  //   const body = {
-  //     'requests': [
-  //       {
-  //         'image': {
-  //           'content': base64Image
-  //         },
-  //         'features': [
-  //           {
-  //             'type': 'LABEL_DETECTION'
-  //           },
-  //           {
-  //             'type': 'WEB_DETECTION'
-  //           },
-  //           {
-  //             'type': 'FACE_DETECTION'
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   };
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //     })
-  //   };
-  //   console.log(body);
-    
-  //   this.http.post('https://vision.googleapis.com/v1/images:annotate?key=' + environment.googleCloudVisionAPIKey, body, httpOptions)
-  //     .subscribe((data) => {
-  //       console.log(data);
-  //     }, (err) => {
-  //       console.log(err);
+  }
 
-  //     });
-  // }
   uploadFile(fileBlob) {
     let filePath: string;
     filePath = new Date().toUTCString();

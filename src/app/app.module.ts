@@ -19,6 +19,7 @@ import { CameraService } from './services/camera.service';
 import { VisionService } from './services/vision.service';
 import { HTTP } from '@ionic-native/http/ngx';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingService } from './services/loading.service';
 @NgModule({
   declarations: [AppComponent, LoginPage],
   entryComponents: [LoginPage],
@@ -37,6 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     HTTP,
     CameraService,
     VisionService,
+    LoadingService,
     { provide: StorageBucket, useValue: environment.firebase.storageBucket },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

@@ -23,6 +23,7 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      localStorage.removeItem('imageData');
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

@@ -3,14 +3,49 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      Web
-    </ion-title>
+    <ion-title> Web </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
+   
+    
+    <ion-content>
+      <ion-img [src]="imageData" class="webimg"> </ion-img>
+
+        <ion-segment [(ngModel)]="web" color="secondary">
+
+
+           <ion-segment-button value="webEntity">
+              <ion-icon name="funnel"></ion-icon>
+            </ion-segment-button>
+
+            <ion-segment-button value="sites">
+                <ion-icon name="cloudy"></ion-icon>
+              </ion-segment-button>
+   
+        </ion-segment>
+
+        <div [ngSwitch]="web">
+         
+          <ion-list *ngSwitchCase="'sites'">
+               <ion-item *ngFor="let link of visionData.webDetection.visuallySimilarImages">
+                  <a href="{{link.url}}">{{link.url}}</a>
+               </ion-item>
+          </ion-list>
+
+          <ion-list *ngSwitchDefault>
+            <span *ngFor="let label of visionData.webDetection.webEntities">
+            <ion-item *ngIf="label.description">
+              <ion-label>
+                 <p class="weblabel">{{label.description}}</p>
+               </ion-label>
+             </ion-item>
+            </span>
+          </ion-list>
+
+        </div>
+ 
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
     <ion-fab-button>

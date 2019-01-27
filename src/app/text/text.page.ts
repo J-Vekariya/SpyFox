@@ -11,5 +11,9 @@ export class TextPage implements OnInit {
 
   ngOnInit() {
   }
-
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter');
+    const image = document.getElementById('sourceImage');
+    image.setAttribute('src', 'data:image/jpeg;base64,' + localStorage.getItem('imageData'));
+  }
 }

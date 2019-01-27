@@ -1,18 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Renderer } from '@angular/core';
 import { CameraService } from '../services/camera.service';
+import { Platform } from '@ionic/angular';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-face',
   templateUrl: 'face.page.html',
   styleUrls: ['face.page.scss']
 })
-export class FacePage {
-  image: any = {
-    'src': 'https://www.sanger.ac.uk/sites/default/files/gaffney-group.jpg'
-  };
-  constructor(private cameraService: CameraService) {
+export class FacePage implements AfterViewInit {
+  @ViewChild('myCanvas') canvas: any;
+  image: any;
+  canvasElement: any;
+  imageObservable: Observable<any> = new Observable();
+  constructor(private cameraService: CameraService, public platform: Platform, public renderer: Renderer) {
   }
   captureImage() {
-    this.cameraService.getPicture();
+    const options = {
+      'canvasElement' : this.canvasElement
+    };
+    this.cameraService.getPicture(options);
+  }
+
+  ngAfterViewInit() {
+    this.canvasElement = this.canvas.nativeElement;
+    this.canvasElement.setAttribute('width', 350);
+    this.canvasElement.setAttribute('height', 635);
   }
 }

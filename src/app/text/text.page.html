@@ -3,24 +3,38 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Text Detection</ion-title>
+    <ion-title> Text </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+ 
+  <ion-img src="https://www.sanger.ac.uk/sites/default/files/gaffney-group.jpg" class="textimg" id="sourceImage"></ion-img>
+  <ion-card>
+
+    <ion-card-content>
+      
+      <ion-card-title> Image Text </ion-card-title>
+      <p>
+          Ionic lets web developers build, test, and deploy cross-platform hybrid mobile apps easier than ever.....
+      </p>
+    </ion-card-content>
+
+   </ion-card>
 
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
-    <ion-fab-button>
-      <ion-icon name="image"></ion-icon>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
+  <ion-fab-button>
+    <ion-icon name="image"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button color="tertiary">
+      <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="tertiary">
-        <ion-icon name="camera"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="danger">
-        <ion-icon name="folder"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+    <ion-fab-button color="danger">
+      <ion-icon name="folder"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+
 </ion-content>
