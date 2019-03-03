@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CameraService } from '../services/camera.service';
 
 @Component({
   selector: 'app-text',
@@ -6,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./text.page.scss'],
 })
 export class TextPage implements OnInit {
-
-  constructor() { }
+  visionData: any = {};
+  constructor(private cameraService: CameraService) { }
 
   ngOnInit() {
   }
@@ -15,5 +16,16 @@ export class TextPage implements OnInit {
     console.log('ionViewDidEnter');
     const image = document.getElementById('sourceImage');
     image.setAttribute('src', 'data:image/jpeg;base64,' + localStorage.getItem('imageData'));
+    this.visionData = this.cameraService.visionData;
+  }
+  captureImage() {
+    const options = {};
+    this.cameraService.getPicture(options);
+  }
+  browseImage() {
+    const options = {
+      'isBrowsed': true
+    };
+    this.cameraService.getPicture(options);
   }
 }

@@ -20,9 +20,11 @@ import { VisionService } from './services/vision.service';
 import { HTTP } from '@ionic-native/http/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingService } from './services/loading.service';
+import { HistoryPage } from './history/history.page';
+import { ProfilePage } from './profile/profile.page';
 @NgModule({
-  declarations: [AppComponent, LoginPage],
-  entryComponents: [LoginPage],
+  declarations: [AppComponent, LoginPage, HistoryPage, ProfilePage],
+  entryComponents: [LoginPage, HistoryPage, ProfilePage],
   imports: [
     BrowserModule, BrowserAnimationsModule, IonicModule.forRoot(), AppRoutingModule,
     ReactiveFormsModule,

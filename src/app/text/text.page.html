@@ -10,13 +10,13 @@
 <ion-content>
  
   <ion-img src="https://www.sanger.ac.uk/sites/default/files/gaffney-group.jpg" class="textimg" id="sourceImage"></ion-img>
-  <ion-card>
+  <ion-card *ngIf="visionData.textAnnotations">
 
     <ion-card-content>
       
       <ion-card-title> Image Text </ion-card-title>
       <p>
-          Ionic lets web developers build, test, and deploy cross-platform hybrid mobile apps easier than ever.....
+          {{visionData.textAnnotations[0].description}}
       </p>
     </ion-card-content>
 
@@ -28,10 +28,10 @@
     <ion-icon name="image"></ion-icon>
   </ion-fab-button>
   <ion-fab-list side="top">
-    <ion-fab-button color="tertiary">
+    <ion-fab-button color="tertiary" (click)="captureImage()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
-    <ion-fab-button color="danger">
+    <ion-fab-button color="danger" (click)="browseImage()">
       <ion-icon name="folder"></ion-icon>
     </ion-fab-button>
   </ion-fab-list>

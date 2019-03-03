@@ -26,6 +26,9 @@ export class VisionService {
             },
             {
               'type': 'FACE_DETECTION'
+            },
+            {
+              'type': 'TEXT_DETECTION'
             }
           ]
         }

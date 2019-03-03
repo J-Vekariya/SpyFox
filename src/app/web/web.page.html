@@ -12,7 +12,7 @@
     
     <ion-content>
       <ion-img [src]="imageData" class="webimg"> </ion-img>
-
+      <span  *ngIf="visionData.webDetection">
         <ion-segment [(ngModel)]="web" color="secondary">
 
 
@@ -45,17 +45,17 @@
           </ion-list>
 
         </div>
- 
+ </span>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
     <ion-fab-button>
       <ion-icon name="image"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="tertiary">
+      <ion-fab-button color="tertiary" (click)="captureImage()">
         <ion-icon name="camera"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="danger">
+      <ion-fab-button color="danger" (click)="browseImage()">
         <ion-icon name="folder"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>

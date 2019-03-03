@@ -10,7 +10,7 @@
 <ion-content>
     <ion-img [src]="imageData" class="labelimg"></ion-img>
 
-  <ion-list>
+  <ion-list *ngIf="visionData.labelAnnotations">
     <ion-item *ngFor="let label of visionData.labelAnnotations">
      <ion-label>
         <p>{{label.description}}</p>
@@ -23,10 +23,10 @@
       <ion-icon name="image"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="tertiary">
+      <ion-fab-button color="tertiary" (click)="captureImage()">
         <ion-icon name="camera"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="danger">
+      <ion-fab-button color="danger" (click)="browseImage()">
         <ion-icon name="folder"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>

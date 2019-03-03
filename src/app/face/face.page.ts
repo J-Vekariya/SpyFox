@@ -17,7 +17,14 @@ export class FacePage implements AfterViewInit {
   }
   captureImage() {
     const options = {
-      'canvasElement' : this.canvasElement
+      'canvasElement': this.canvasElement
+    };
+    this.cameraService.getPicture(options);
+  }
+  browseImage() {
+    const options = {
+      'isBrowsed': true,
+      'canvasElement': this.canvasElement
     };
     this.cameraService.getPicture(options);
   }

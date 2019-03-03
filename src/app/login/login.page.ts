@@ -5,6 +5,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,7 @@ export class LoginPage implements OnInit {
   currentUser: Observable<any>;
   loginForm: FormGroup;
   signupForm: FormGroup;
-  constructor(private modalCtrl: ModalController, private afs: AngularFirestore) {
+  constructor(private modalCtrl: ModalController, private afs: AngularFirestore, private userService: UserService) {
 
   }
 
@@ -44,7 +45,6 @@ export class LoginPage implements OnInit {
     this.createForms();
   }
   segmentChanged(event) {
-    console.log(event);
     this.auth = event.detail.value;
   }
 
@@ -65,7 +65,11 @@ export class LoginPage implements OnInit {
     this.currentUser.subscribe((data: any) => {
       if (data) {
         if (data.password === this.loginForm.value.password) {
-          alert('Success');
+          this.userService.isLoggedIn = true;
+          this.userService.loggedInUser = data;
+          delete(data.password);
+          localStorage.setItem('loggedInUser', JSON.stringify(data));
+          this.dismissModal();
         } else {
           alert('Bad Credentials');
         }
@@ -89,24 +93,24 @@ export class LoginPage implements OnInit {
   }
 
 
-  toggleLogin() {
-    this.isOpen = false;
-    setTimeout(() => {
-      this.slideTo(0);
-    }, 50);
-  }
+  // toggleLogin() {
+  //   this.isOpen = false;
+  //   setTimeout(() => {
+  //     this.slideTo(0);
+  //   }, 50);
+  // }
 
-  toggleCreate() {
-    this.isOpen = false;
-    setTimeout(() => {
-      this.slideTo(1);
-    }, 50);
-  }
+  // toggleCreate() {
+  //   this.isOpen = false;
+  //   setTimeout(() => {
+  //     this.slideTo(1);
+  //   }, 50);
+  // }
 
-  slideTo(slide: number) {
-    this.slides = document.getElementById('slides');
-    this.slides.slideTo(slide);
-  }
+  // slideTo(slide: number) {
+  //   this.slides = document.getElementById('slides');
+  //   this.slides.slideTo(slide);
+  // }
 
   dismissModal() {
     this.modalCtrl.dismiss();

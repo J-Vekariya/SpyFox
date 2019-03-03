@@ -6,6 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { ModalController } from '@ionic/angular';
 import { LoginPage } from './login/login.page';
+import { UserService } from './services/user.service';
+import { HistoryPage } from './history/history.page';
+import { ProfilePage } from './profile/profile.page';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -16,7 +19,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public userService: UserService
   ) {
     this.initializeApp();
   }
@@ -27,6 +31,10 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    if (localStorage.getItem('loggedInUser')) {
+      this.userService.isLoggedIn = true;
+      this.userService.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    }
   }
 
   async presentModal() {
@@ -35,6 +43,28 @@ export class AppComponent {
       componentProps: { value: 123 }
     });
     return await modal.present();
+  }
+
+  async presentHistoryModal() {
+    const modal = await this.modalController.create({
+      component: HistoryPage,
+      componentProps: { value: 123 }
+    });
+    return await modal.present();
+  }
+
+  async presentProfileModal() {
+    const modal = await this.modalController.create({
+      component: ProfilePage,
+      componentProps: { value: 123 }
+    });
+    return await modal.present();
+  }
+
+  doLogout() {
+    this.userService.isLoggedIn = false;
+    this.userService.loggedInUser = {};
+    localStorage.removeItem('loggedInUser');
   }
 
 }

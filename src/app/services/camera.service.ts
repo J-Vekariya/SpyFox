@@ -5,13 +5,19 @@ import { VisionService } from './vision.service';
 import { environment } from 'src/environments/environment';
 import { Observable, from } from 'rxjs';
 import { LoadingService } from './loading.service';
-
+import { finalize } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { User } from '../models/user.model';
+import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
 })
 export class CameraService {
   @ViewChild('myCanvas') canvas: any;
-  options: CameraOptions = {
+  downloadURL: Observable<string>;
+  private userDoc: AngularFirestoreDocument<User>;
+  currentUser: Observable<any>;
+  captureOptions: CameraOptions = {
     quality: 100,
     targetWidth: 350,
     targetHeight: 635,
@@ -19,16 +25,30 @@ export class CameraService {
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
   };
+  browseOptions: CameraOptions = {
+    quality: 100,
+    targetWidth: 350,
+    targetHeight: 635,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
+  };
   base64Image: Observable<any> = new Observable();
   image: any;
   visionResponse: Observable<any> = new Observable();
   visionData: any;
   constructor(private camera: Camera, private storage: AngularFireStorage,
-    private visionService: VisionService, public loadingService: LoadingService) {
+    private visionService: VisionService, public loadingService: LoadingService,
+    private afs: AngularFirestore, private userService: UserService) {
   }
 
   getPicture(options) {
-    this.base64Image = from(this.camera.getPicture(this.options));
+    if (options.isBrowsed) {
+      this.base64Image = from(this.camera.getPicture(this.browseOptions));
+    } else {
+      this.base64Image = from(this.camera.getPicture(this.captureOptions));
+    }
     this.base64Image.subscribe((data) => {
       this.loadingService.presentLoading();
       console.log('Captured');
@@ -47,13 +67,13 @@ export class CameraService {
               this.drawRectOnCanvas(ctx, visionData.responses[0]);
             } else {
               this.loadingService.dismissLoading();
-              
+
             }
           }, 0);
         }
       });
 
-      if (localStorage.getItem('currentUser')) {
+      if (localStorage.getItem('loggedInUser')) {
         this.uploadFile(this.getBlob(data, 'image/png', 512));
       }
     });
@@ -77,17 +97,44 @@ export class CameraService {
     // });
 
   }
-
+  addToHistory(downloadUrl) {
+    this.userDoc = this.afs.doc<User>('users/' + this.userService.loggedInUser.mobile);
+    // this.currentUser = this.afs.doc('users/' + this.userService.loggedInUser.mobile).valueChanges();
+    // this.currentUser.subscribe((data: any) => {
+    //   if (data) {
+    //     this.userService.loggedInUser.history.push({
+    //       'date': new Date().getTime(),
+    //       'url' : downloadUrl
+    //     });
+    //     this.userDoc.update(this.userService.loggedInUser);
+    //   }
+    // });
+    this.userService.loggedInUser.history.push({
+      'date': new Date().getTime(),
+      'url' : downloadUrl
+    });
+    this.userDoc.update(this.userService.loggedInUser);
+  }
   uploadFile(fileBlob) {
     let filePath: string;
     filePath = new Date().toUTCString();
     const file = fileBlob;
     const ref = this.storage.ref(filePath);
-    const task = ref.put(file);
+    const task = this.storage.upload(filePath, file);
     const progress = task.percentageChanges();
-    progress.subscribe((data) => {
-      console.log(data);
-    });
+    task.snapshotChanges().pipe(
+      finalize(() => {
+        this.downloadURL = ref.getDownloadURL();
+        this.downloadURL.subscribe(url => {
+          console.log(url);
+          this.addToHistory(url);
+        });
+      })
+    )
+      .subscribe();
+    // progress.subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 
   getBlob(b64Data: string, contentType: string, sliceSize: number = 512) {

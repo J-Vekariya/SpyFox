@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['label.page.scss']
 })
 export class LabelPage implements OnInit {
-  visionData: any;
+  visionData: any = {};
   imageData = 'https://www.sanger.ac.uk/sites/default/files/gaffney-group.jpg';
   constructor(private cameraService: CameraService) { }
   ngOnInit() {
@@ -24,5 +24,11 @@ export class LabelPage implements OnInit {
   captureImage() {
     this.cameraService.getPicture({});
 
+  }
+  browseImage() {
+    const options = {
+      'isBrowsed': true,
+    };
+    this.cameraService.getPicture(options);
   }
 }
