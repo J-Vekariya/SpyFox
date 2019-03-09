@@ -8,8 +8,21 @@
 </ion-header>
 
 <ion-content>
- 
-  <ion-img src="https://www.sanger.ac.uk/sites/default/files/gaffney-group.jpg" class="textimg" id="sourceImage"></ion-img>
+    <div>
+        <ion-grid>
+          <ion-row>
+            <ion-col class="image-col">
+              <ion-img src="assets/text.png"></ion-img>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="label-col">
+              <ion-label>App will give you text from captured image.</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+  <ion-img  *ngIf="visionData.textAnnotations" src="https://www.sanger.ac.uk/sites/default/files/gaffney-group.jpg" class="textimg" id="sourceImage"></ion-img>
   <ion-card *ngIf="visionData.textAnnotations">
 
     <ion-card-content>

@@ -13,11 +13,24 @@
 
   <!-- <img padding id="selectedImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Poster-sized_portrait_of_Barack_Obama.jpg/450px-Poster-sized_portrait_of_Barack_Obama.jpg">
   {{image}} -->
-<div class="canvas-container">
-          <canvas id="imageCanvas" #myCanvas >
-            Your browser does not support the HTML5 canvas tag.</canvas>
-          </div>
-
+  <!-- <div class="canvas-container">
+    <canvas id="imageCanvas" #myCanvas>
+      Your browser does not support the HTML5 canvas tag.</canvas>
+  </div> -->
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="image-col">
+          <ion-img src="assets/face.jpeg"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="label-col">
+          <ion-label>Let the app detect your face.</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
     <ion-fab-button>
       <ion-icon name="image"></ion-icon>
