@@ -11,7 +11,7 @@
 
 
 <ion-content>
-  <div>
+  <div *ngIf="!cameraService.isImageCaptured">
     <ion-grid>
       <ion-row>
         <ion-col class="image-col">
@@ -61,7 +61,7 @@
     </div>
   </span>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
     <ion-fab-button>
       <ion-icon name="image"></ion-icon>
     </ion-fab-button>
@@ -73,5 +73,5 @@
         <ion-icon name="folder"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
-  </ion-fab>
+  </ion-fab> -->
 </ion-content>

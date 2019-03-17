@@ -13,7 +13,7 @@ export class FacePage implements AfterViewInit {
   image: any;
   canvasElement: any;
   imageObservable: Observable<any> = new Observable();
-  constructor(private cameraService: CameraService, public platform: Platform, public renderer: Renderer) {
+  constructor(public cameraService: CameraService, public platform: Platform, public renderer: Renderer) {
   }
   captureImage() {
     const options = {

@@ -34,11 +34,7 @@ export class VisionService {
         }
       ]
     };
-    // const httpOptions = {
-    // 'headers' = {
-    //   'Content-Type': 'application/json',
-    // })
-    // };
+
     return this.httpClient.post('https://vision.googleapis.com/v1/images:annotate?key=' + environment.googleCloudVisionAPIKey, body);
   }
 }

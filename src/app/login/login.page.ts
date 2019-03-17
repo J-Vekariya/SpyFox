@@ -87,31 +87,16 @@ export class LoginPage implements OnInit {
       if (data) {
         return;
       } else {
-        this.userDoc.set(this.signupForm.value);
+        const userData = this.signupForm.value;
+        userData.history = [];
+        this.userDoc.set(userData);
+        alert('Signup Successful');
+        this.signupForm.reset();
+        this.auth = 'login';
       }
     });
   }
-
-
-  // toggleLogin() {
-  //   this.isOpen = false;
-  //   setTimeout(() => {
-  //     this.slideTo(0);
-  //   }, 50);
-  // }
-
-  // toggleCreate() {
-  //   this.isOpen = false;
-  //   setTimeout(() => {
-  //     this.slideTo(1);
-  //   }, 50);
-  // }
-
-  // slideTo(slide: number) {
-  //   this.slides = document.getElementById('slides');
-  //   this.slides.slideTo(slide);
-  // }
-
+  
   dismissModal() {
     this.modalCtrl.dismiss();
   }

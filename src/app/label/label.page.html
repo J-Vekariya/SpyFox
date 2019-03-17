@@ -8,9 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <div>
+  <div *ngIf="!cameraService.isImageCaptured">
     <ion-grid>
-      <ion-row>
+      <ion-row >
         <ion-col class="image-col">
           <ion-img src="assets/label.png"></ion-img>
         </ion-col>
@@ -32,7 +32,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
     <ion-fab-button>
       <ion-icon name="image"></ion-icon>
     </ion-fab-button>
@@ -44,5 +44,5 @@
         <ion-icon name="folder"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
-  </ion-fab>
+  </ion-fab> -->
 </ion-content>

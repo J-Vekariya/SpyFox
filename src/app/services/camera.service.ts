@@ -38,6 +38,7 @@ export class CameraService {
   image: any;
   visionResponse: Observable<any> = new Observable();
   visionData: any;
+  isImageCaptured = false;
   constructor(private camera: Camera, private storage: AngularFireStorage,
     private visionService: VisionService, public loadingService: LoadingService,
     private afs: AngularFirestore, private userService: UserService) {
@@ -62,6 +63,7 @@ export class CameraService {
           image.setAttribute('src', 'data:image/jpeg;base64,' + data);
           setTimeout(() => {
             const ctx = options.canvasElement.getContext('2d');
+            ctx.clearRect(0, 0, 350, 635);
             ctx.drawImage(image, 0, 0, 350, 635, 0, 0, 350, 635);
             if (visionData.responses[0].faceAnnotations) {
               this.drawRectOnCanvas(ctx, visionData.responses[0]);
@@ -69,6 +71,7 @@ export class CameraService {
               this.loadingService.dismissLoading();
 
             }
+            this.isImageCaptured = true;
           }, 0);
         }
       });
@@ -90,28 +93,12 @@ export class CameraService {
   }
   getDataFromVision(imageData) {
     this.visionResponse = from(this.visionService.getData(imageData));
-    // this.visionResponse.subscribe((result: any) => {
-    //   console.log(JSON.stringify(result.responses));
-    // }, err => {
-    //   console.log(err);
-    // });
-
   }
   addToHistory(downloadUrl) {
     this.userDoc = this.afs.doc<User>('users/' + this.userService.loggedInUser.mobile);
-    // this.currentUser = this.afs.doc('users/' + this.userService.loggedInUser.mobile).valueChanges();
-    // this.currentUser.subscribe((data: any) => {
-    //   if (data) {
-    //     this.userService.loggedInUser.history.push({
-    //       'date': new Date().getTime(),
-    //       'url' : downloadUrl
-    //     });
-    //     this.userDoc.update(this.userService.loggedInUser);
-    //   }
-    // });
     this.userService.loggedInUser.history.push({
       'date': new Date().getTime(),
-      'url' : downloadUrl
+      'url': downloadUrl
     });
     this.userDoc.update(this.userService.loggedInUser);
   }
@@ -132,9 +119,6 @@ export class CameraService {
       })
     )
       .subscribe();
-    // progress.subscribe((data) => {
-    //   console.log(data);
-    // });
   }
 
   getBlob(b64Data: string, contentType: string, sliceSize: number = 512) {

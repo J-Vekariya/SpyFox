@@ -11,13 +11,7 @@
 
 <ion-content>
 
-  <!-- <img padding id="selectedImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Poster-sized_portrait_of_Barack_Obama.jpg/450px-Poster-sized_portrait_of_Barack_Obama.jpg">
-  {{image}} -->
-  <!-- <div class="canvas-container">
-    <canvas id="imageCanvas" #myCanvas>
-      Your browser does not support the HTML5 canvas tag.</canvas>
-  </div> -->
-  <div>
+  <div *ngIf="!cameraService.isImageCaptured">
     <ion-grid>
       <ion-row>
         <ion-col class="image-col">
@@ -30,6 +24,10 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+  </div>
+  <div class="canvas-container">
+    <canvas id="imageCanvas" #myCanvas>
+      Your browser does not support the HTML5 canvas tag.</canvas>
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
     <ion-fab-button>

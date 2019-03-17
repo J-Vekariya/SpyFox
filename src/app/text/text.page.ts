@@ -8,14 +8,16 @@ import { CameraService } from '../services/camera.service';
 })
 export class TextPage implements OnInit {
   visionData: any = {};
+  imageData = 'https://www.sanger.ac.uk/sites/default/files/gaffney-group.jpg';
   constructor(private cameraService: CameraService) { }
 
   ngOnInit() {
   }
   ionViewDidEnter() {
     console.log('ionViewDidEnter');
-    const image = document.getElementById('sourceImage');
-    image.setAttribute('src', 'data:image/jpeg;base64,' + localStorage.getItem('imageData'));
+    if (localStorage.getItem('imageData')) {
+      this.imageData = 'data:image/jpeg;base64,' + localStorage.getItem('imageData');
+    }
     this.visionData = this.cameraService.visionData;
   }
   captureImage() {

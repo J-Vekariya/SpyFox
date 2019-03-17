@@ -8,7 +8,8 @@
 </ion-header>
 
 <ion-content>
-    <div>
+  
+    <div *ngIf="!cameraService.isImageCaptured || !visionData.textAnnotations">
         <ion-grid>
           <ion-row>
             <ion-col class="image-col">
@@ -22,7 +23,7 @@
           </ion-row>
         </ion-grid>
       </div>
-  <ion-img  *ngIf="visionData.textAnnotations" src="https://www.sanger.ac.uk/sites/default/files/gaffney-group.jpg" class="textimg" id="sourceImage"></ion-img>
+  <ion-img  *ngIf="visionData.textAnnotations" [src]="imageData" class="textimg" id="sourceImage"></ion-img>
   <ion-card *ngIf="visionData.textAnnotations">
 
     <ion-card-content>
@@ -36,7 +37,7 @@
    </ion-card>
 
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
+<!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
   <ion-fab-button>
     <ion-icon name="image"></ion-icon>
   </ion-fab-button>
@@ -48,6 +49,6 @@
       <ion-icon name="folder"></ion-icon>
     </ion-fab-button>
   </ion-fab-list>
-</ion-fab>
+</ion-fab> -->
 
 </ion-content>
