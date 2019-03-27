@@ -8,7 +8,7 @@ export class LoadingService {
   loading: any;
   constructor(public loadingController: LoadingController) { }
 
-  async presentLoading() {
+async presentLoading() {
     this.loading = await this.loadingController.create({
       message: 'Please wait we are processing your image...',
       spinner: 'crescent',

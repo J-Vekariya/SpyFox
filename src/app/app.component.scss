@@ -18,8 +18,43 @@ img {
     opacity: 0.5;
     background: #000;
     color: #fff;
-
 }
 .item {
     height: 50px;;
+}
+.userProfile{
+    height: 180px;
+    background-image: url("../assets/profile.jpg");
+    // background-color: #000;
+    position: relative;
+    margin: 0;
+    width: 100%;
+}
+.userPhoto{
+    padding-top: 71px;
+    padding-left: 12px;
+}
+.uName{
+    background-color: #8f92ff; 
+}
+.uNameChar{
+//     margin-left: 15px;
+//     margin-top: 0px;
+//     font-size: 55px;
+//    font-family: 'Cinzel'; 
+//     color: white;
+    margin-top: 0px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    font-size: 50px;
+    font-family: 'Cinzel';
+    color: white;
+
+}
+.userName{
+    color:white;
+    padding-left: 10px;
+   
 }

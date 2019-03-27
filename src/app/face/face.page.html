@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="face-content">
 
   <div *ngIf="!cameraService.isImageCaptured">
     <ion-grid>
@@ -25,9 +25,19 @@
       </ion-row>
     </ion-grid>
   </div>
+
+
+  <ion-grid >
+    <ion-col>
+      <ion-row>
+        <canvas id="imageCanvas" #myCanvas>
+          Your browser does not support the HTML5 canvas tag.</canvas>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+
   <div class="canvas-container">
-    <canvas id="imageCanvas" #myCanvas>
-      Your browser does not support the HTML5 canvas tag.</canvas>
+
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" size="small">
     <ion-fab-button>

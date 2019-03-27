@@ -21,7 +21,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     public modalController: ModalController,
     public userService: UserService
-  ) {
+  )
+   {
     this.initializeApp();
   }
 
@@ -34,6 +35,7 @@ export class AppComponent {
     if (localStorage.getItem('loggedInUser')) {
       this.userService.isLoggedIn = true;
       this.userService.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      this.userService.userName=this.userService.loggedInUser.name.charAt(0).toUpperCase();
     }
   }
 
@@ -62,7 +64,7 @@ export class AppComponent {
   }
 
   doLogout() {
-    this.userService.isLoggedIn = false;
+     this.userService.isLoggedIn = false;
     this.userService.loggedInUser = {};
     localStorage.removeItem('loggedInUser');
   }

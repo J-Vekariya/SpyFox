@@ -69,6 +69,7 @@ export class LoginPage implements OnInit {
           this.userService.loggedInUser = data;
           delete(data.password);
           localStorage.setItem('loggedInUser', JSON.stringify(data));
+          this.userService.userName=data.name.charAt(0).toUpperCase();
           this.dismissModal();
         } else {
           alert('Bad Credentials');

@@ -1,3 +1,4 @@
+<link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
 <ion-app>
   <ion-split-pane>
     <ion-menu>
@@ -21,12 +22,15 @@
       </ion-content>
 
       <ion-content *ngIf="userService.isLoggedIn">
-        <ion-card class="myCard">
-          <img src="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg" />
-          <div class="myOverlay" padding>
-            <div class="card-title">Welcome <b>{{userService.loggedInUser.name}}</b></div>
+
+        <div class="userProfile">
+          <div class="userPhoto">
+            <ion-avatar item-start class="uName">
+              <p class="uNameChar">{{userService.userName}}</p>
+            </ion-avatar>
           </div>
-        </ion-card>
+          <p class="userName">Welcome <b>{{userService.loggedInUser.name}}</b></p>
+        </div>
         <ion-list lines="none">
           <ion-item (click)="presentProfileModal()">
             <ion-icon name="person"></ion-icon>
