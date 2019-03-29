@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, IonicModule } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -9,6 +9,8 @@ import { LoginPage } from './login/login.page';
 import { UserService } from './services/user.service';
 import { HistoryPage } from './history/history.page';
 import { ProfilePage } from './profile/profile.page';
+import { Network } from '@ionic-native/network/ngx';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -20,13 +22,21 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public modalController: ModalController,
-    public userService: UserService
+    public userService: UserService,
+    private network: Network
   )
    {
     this.initializeApp();
   }
 
   initializeApp() {
+
+    const disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      console.log('network was disconnected :-(');
+      alert('Your Internet connections seems disconnected.');
+      navigator['app'].exitApp();
+    });
+    
     this.platform.ready().then(() => {
       localStorage.removeItem('imageData');
       this.statusBar.styleDefault();

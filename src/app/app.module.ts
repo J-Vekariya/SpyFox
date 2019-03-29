@@ -22,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoadingService } from './services/loading.service';
 import { HistoryPage } from './history/history.page';
 import { ProfilePage } from './profile/profile.page';
-import {Network } from '@ionic-native/network';
+import { Network } from '@ionic-native/network/ngx';
 @NgModule({
   declarations: [AppComponent, LoginPage, HistoryPage, ProfilePage],
   entryComponents: [LoginPage, HistoryPage, ProfilePage],
@@ -39,6 +39,7 @@ import {Network } from '@ionic-native/network';
     SplashScreen,
     Camera,
     HTTP,
+    Network,
     CameraService,
     VisionService,
     LoadingService,
