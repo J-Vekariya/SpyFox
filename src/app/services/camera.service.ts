@@ -102,6 +102,10 @@ export class CameraService {
     });
     this.userDoc.update(this.userService.loggedInUser);
   }
+  updateHistory() {
+    this.userDoc = this.afs.doc<User>('users/' + this.userService.loggedInUser.mobile);
+    this.userDoc.update(this.userService.loggedInUser);
+  }
   uploadFile(fileBlob) {
     let filePath: string;
     filePath = new Date().toUTCString();
